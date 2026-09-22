@@ -18,7 +18,20 @@
     <!-- The List of Tasks -->
     <ul>
         {% for task in tasks %}
-            <li>{{ task.title }}</li>
+            <li>
+                <!-- Show the title with a line-through if completed -->
+                <span style="{{ task.completed|yesno:'text-decoration: line-through;, ' }}">
+                    {{ task.title }} ({{ task.category }})
+                </span>
+
+                <!-- The Toggle Button -->
+                <a href="{% url 'toggle_task' task.id %}">
+                    {% if task.completed %}Mark Incomplete{% else %}Mark Done{% endif %}
+                </a>
+
+                <!-- The Delete Button -->
+                <a href="{% url 'delete_task' task.id %}" style="color: red;">Delete</a>
+            </li>
         {% empty %}
             <li>No tasks yet!</li>
         {% endfor %}
